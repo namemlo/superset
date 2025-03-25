@@ -102,3 +102,12 @@ class AnnotationPutSchema(Schema):
         required=False,
         allow_none=True,
     )
+
+
+class AnnotationGetSchema(Schema):
+    id = fields.Integer()
+    start_dttm = fields.DateTime()
+    end_dttm = fields.DateTime()
+    short_descr = fields.String()
+    long_descr = fields.String()
+    json_metadata = fields.String()
