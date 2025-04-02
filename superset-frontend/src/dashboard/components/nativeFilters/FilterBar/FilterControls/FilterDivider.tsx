@@ -27,12 +27,18 @@ import React from 'react';
 import Icons from 'src/components/Icons';
 import { Tooltip } from 'src/components/Tooltip';
 import { FilterBarOrientation } from 'src/dashboard/types';
+// import DateRangePicker from 'src/components/DateRangePicker/DateRangePicker';
 import { FilterDividerProps } from './types';
 
 const VerticalDivider = ({ title, description }: FilterDividerProps) => (
   <div>
     <h3>{title}</h3>
     {description ? <p data-test="divider-description">{description}</p> : null}
+    {/* <DateRangePicker
+      onChange={(startDate, endDate) =>
+        console.log(`Selected date range: ${startDate} to ${endDate}`)
+      }
+    /> */}
   </div>
 );
 
@@ -85,6 +91,11 @@ const HorizontalDivider = ({ title, description }: FilterDividerProps) => {
           />
         </Tooltip>
       ) : null}
+      {/* <DateRangePicker
+        onChange={(startDate, endDate) =>
+          console.log(`Selected date range: ${startDate} to ${endDate}`)
+        }
+      /> */}
     </div>
   );
 };
@@ -140,6 +151,11 @@ const HorizontalOverflowDivider = ({
           </p>
         </Tooltip>
       ) : null}
+      {/* <DateRangePicker
+        onChange={(startDate, endDate) =>
+          console.log(`Selected date range: ${startDate} to ${endDate}`)
+        }
+      /> */}
     </div>
   );
 };

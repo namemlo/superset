@@ -20,9 +20,11 @@ import React from 'react';
 import { t } from '@superset-ui/core';
 import { SEPARATOR } from 'src/explore/components/controls/DateFilterControl/utils';
 import { Input } from 'src/components/Input';
-import { InfoTooltipWithTrigger } from '@superset-ui/chart-controls';
+// import { InfoTooltipWithTrigger } from '@superset-ui/chart-controls';
 import { FrameComponentProps } from 'src/explore/components/controls/DateFilterControl/types';
-import DateFunctionTooltip from './DateFunctionTooltip';
+import DatePicker from 'antd/lib/date-picker';
+import { Col, Row } from 'antd-v5';
+// import DateFunctionTooltip from './DateFunctionTooltip';
 
 function getAdvancedRange(value: string): string {
   if (value.includes(SEPARATOR)) {
@@ -54,20 +56,13 @@ export function AdvancedFrame(props: FrameComponentProps) {
 
   return (
     <>
-      <div className="section-title">
-        {t('Configure Advanced Time Range ')}
+      {/* <div className="section-title">
+        {t('Configure Time Range ')}
         <DateFunctionTooltip placement="rightBottom">
           <i className="fa fa-info-circle text-muted" />
         </DateFunctionTooltip>
-      </div>
-      <div className="control-label">
-        {t('START (INCLUSIVE)')}{' '}
-        <InfoTooltipWithTrigger
-          tooltip={t('Start date included in time range')}
-          placement="right"
-        />
-      </div>
-      <Input
+      </div> */}
+      {/* <Input
         key="since"
         value={since}
         onChange={e => onChange('since', e.target.value)}
@@ -83,7 +78,21 @@ export function AdvancedFrame(props: FrameComponentProps) {
         key="until"
         value={until}
         onChange={e => onChange('until', e.target.value)}
-      />
+      /> */}
+      <Row className="time-ranger">
+        <Col className="time-section">
+          <DatePicker
+            placeholder={t('Start date')}
+            onChange={e => onChange('since', e!.toDate().toDateString())}
+          />
+        </Col>
+        <Col className="time-section">
+          <DatePicker
+            placeholder={t('End date')}
+            onChange={e => onChange('until', e!.toDate().toDateString())}
+          />
+        </Col>
+      </Row>
     </>
   );
 }
