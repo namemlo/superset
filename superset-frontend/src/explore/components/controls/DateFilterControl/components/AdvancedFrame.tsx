@@ -24,6 +24,7 @@ import { Input } from 'src/components/Input';
 import { FrameComponentProps } from 'src/explore/components/controls/DateFilterControl/types';
 import DatePicker from 'antd/lib/date-picker';
 import { Col, Row } from 'antd';
+import { format } from 'date-fns';
 // import DateFunctionTooltip from './DateFunctionTooltip';
 
 function getAdvancedRange(value: string): string {
@@ -42,6 +43,10 @@ function getAdvancedRange(value: string): string {
 export function AdvancedFrame(props: FrameComponentProps) {
   const advancedRange = getAdvancedRange(props.value || '');
   const [since, until] = advancedRange.split(SEPARATOR);
+
+  let startDate = new Date();
+  let endDate = new Date();
+
   if (advancedRange !== props.value) {
     props.onChange(getAdvancedRange(props.value || ''));
   }
@@ -85,16 +90,51 @@ export function AdvancedFrame(props: FrameComponentProps) {
         <Col className="time-section">
           <DatePicker
             placeholder={t('Start date')}
-            onChange={e => onChange('since', e!.toDate().toDateString())}
+            onChange={e => {
+              if (!e) {
+                return;
+              }
+              const date = e!.toDate();
+              date.setHours(0, 0, 0, 0);
+              // endDate.setDate(startDate.getDate() + 1);
+              const startDateDate = format(date, "yyyy-MM-dd'T'HH:mm:ss");
+              // const endDateDate = format(endDate, "yyyy-MM-dd'T'HH:mm:ss");
+              onChange('since', startDateDate);
+              startDate = e!.toDate();
+              // onChange('since', startDateDate);
+            }}
           />
         </Col>
         <Col className="time-section">
           <DatePicker
             placeholder={t('End date')}
-            onChange={e => onChange('until', e!.toDate().toDateString())}
+            onChange={e => {
+              if (!e) {
+                return;
+              }
+              const date = e!.toDate();
+              date.setHours(0, 0, 0, 0);
+              date.setDate(date.getDate() + 1);
+              // const startDateDate = format(startDate, "yyyy-MM-dd'T'HH:mm:ss");
+              const endDateDate = format(date, "yyyy-MM-dd'T'HH:mm:ss");
+              onChange('until', endDateDate);
+              endDate = e!.toDate();
+            }}
           />
         </Col>
       </Row>
     </>
   );
+}
+
+function formatLocalDate(date: Date) {
+  const pad = (n: number) => (n < 10 ? `0${n}` : n);
+  const year = date.getFullYear();
+  // Note: getMonth() returns 0-indexed months so we add 1.
+  const month = pad(date.getMonth() + 1);
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+  const seconds = pad(date.getSeconds());
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 }
