@@ -23,7 +23,7 @@ import { Input } from 'src/components/Input';
 // import { InfoTooltipWithTrigger } from '@superset-ui/chart-controls';
 import { FrameComponentProps } from 'src/explore/components/controls/DateFilterControl/types';
 import DatePicker from 'antd/lib/date-picker';
-import { Col, Row } from 'antd-v5';
+import { Col, Row } from 'antd';
 // import DateFunctionTooltip from './DateFunctionTooltip';
 
 function getAdvancedRange(value: string): string {
